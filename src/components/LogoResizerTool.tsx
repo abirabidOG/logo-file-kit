@@ -17,6 +17,8 @@ import {
   CheckCircle2,
   X,
   ExternalLink,
+  ZoomIn,
+  ZoomOut,
 } from "lucide-react";
 import {
   LoadedLogo,
@@ -39,7 +41,7 @@ export default function LogoResizerTool() {
   const [logo, setLogo] = useState<LoadedLogo | null>(null);
   const [background, setBackground] = useState<BackgroundMode>("transparent");
   const [customColor, setCustomColor] = useState<string>("#1F8C7F");
-  const [paddingPercent, setPaddingPercent] = useState<number>(10);
+  const [zoomPercent, setZoomPercent] = useState<number>(100);
   const [exportFormat, setExportFormat] = useState<ExportFormat>("png");
   const [selectedSizeIds, setSelectedSizeIds] = useState<string[]>(
     EXPORT_SIZES.map((s) => s.id)
@@ -67,7 +69,7 @@ export default function LogoResizerTool() {
     return () => clearTimeout(timer);
   }, [feedbackMessage]);
 
-  // Update live preview when logo, padding, background, or format changes
+  // Update live preview when logo, zoom, background, or format changes
   useEffect(() => {
     if (!logo) {
       setPreviewDataUrl(null);
@@ -91,7 +93,7 @@ export default function LogoResizerTool() {
       exportFormat,
       background,
       customColor,
-      paddingPercent
+      zoomPercent
     )
       .then((res) => {
         if (isMounted) {
@@ -105,7 +107,7 @@ export default function LogoResizerTool() {
     return () => {
       isMounted = false;
     };
-  }, [logo, background, customColor, paddingPercent, exportFormat]);
+  }, [logo, background, customColor, zoomPercent, exportFormat]);
 
   // Process incoming file
   const handleProcessFile = useCallback(async (file: File) => {
@@ -192,7 +194,7 @@ export default function LogoResizerTool() {
         exportFormat,
         background,
         customColor,
-        paddingPercent
+        zoomPercent
       );
       triggerFileDownload(result);
       trackLogoExported({
@@ -201,7 +203,7 @@ export default function LogoResizerTool() {
         height: sizeConfig.height,
         format: exportFormat,
         background,
-        paddingPercent,
+        zoomPercent,
         fileName: result.fileName,
       });
       setFeedbackMessage({
@@ -235,7 +237,7 @@ export default function LogoResizerTool() {
           exportFormat,
           background,
           customColor,
-          paddingPercent
+          zoomPercent
         )
       );
       const results = await Promise.all(renderPromises);
@@ -245,7 +247,7 @@ export default function LogoResizerTool() {
         fileCount: results.length,
         format: exportFormat,
         background,
-        paddingPercent,
+        zoomPercent,
         selectedSizes: selectedConfigs.map((c) => c.id),
       });
 
@@ -410,7 +412,7 @@ export default function LogoResizerTool() {
                     Interactive Live Preview
                   </span>
                   <span className="text-[11px] font-semibold text-[#1F8C7F] bg-[#EBF7F5] px-2 py-0.5 rounded-md border border-[#B6E2DC]">
-                    {paddingPercent}% Padding
+                    Zoom: {zoomPercent}%
                   </span>
                 </div>
 
@@ -527,39 +529,64 @@ export default function LogoResizerTool() {
                   )}
                 </div>
 
-                {/* 2. Padding Slider */}
+                {/* 2. Logo Size / Zoom Slider (Middle is default 100%, drag left to zoom out, right to zoom in) */}
                 <div className="space-y-3 pt-4 border-t border-[#E5E1D6]">
                   <div className="flex items-center justify-between">
                     <label
-                      htmlFor="padding-slider"
+                      htmlFor="zoom-slider"
                       className="text-sm font-bold text-[#0B0B0D] flex items-center gap-2"
                     >
-                      <Sliders className="h-4 w-4 text-[#1F8C7F]" />
-                      <span>Padding / Safe Zone</span>
+                      <ZoomIn className="h-4 w-4 text-[#1F8C7F]" />
+                      <span>Logo Size / Zoom</span>
                     </label>
-                    <span className="text-sm font-extrabold text-[#1F8C7F] font-mono">
-                      {paddingPercent}%
-                    </span>
+                    <div className="flex items-center gap-2">
+                      {zoomPercent !== 100 && (
+                        <button
+                          type="button"
+                          onClick={() => setZoomPercent(100)}
+                          className="text-[11px] font-semibold text-[#1F8C7F] hover:underline cursor-pointer"
+                          title="Reset to default 100%"
+                        >
+                          Reset
+                        </button>
+                      )}
+                      <span className="text-sm font-extrabold text-[#1F8C7F] font-mono bg-[#EBF7F5] px-2.5 py-0.5 rounded-md border border-[#B6E2DC]">
+                        {zoomPercent}%
+                      </span>
+                    </div>
                   </div>
 
                   <input
-                    id="padding-slider"
+                    id="zoom-slider"
                     type="range"
-                    min="0"
-                    max="30"
+                    min="40"
+                    max="160"
                     step="1"
-                    value={paddingPercent}
-                    onChange={(e) => setPaddingPercent(Number(e.target.value))}
+                    value={zoomPercent}
+                    onChange={(e) => setZoomPercent(Number(e.target.value))}
                     className="w-full h-2 rounded-lg bg-[#E5E1D6] cursor-pointer"
+                    aria-label="Logo size and zoom slider"
                   />
 
-                  <div className="flex justify-between text-[11px] text-[#4F4E55]">
-                    <span>0% (Tight edge)</span>
-                    <span className="text-[#1F8C7F] font-semibold">10% (Recommended default)</span>
-                    <span>30% (Spacious avatar)</span>
+                  <div className="flex justify-between items-center text-[11px] text-[#4F4E55]">
+                    <span className="flex items-center gap-1 font-medium">
+                      <ZoomOut className="h-3.5 w-3.5 text-[#4F4E55]" />
+                      <span>Zoom out (pad)</span>
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setZoomPercent(100)}
+                      className="text-[#1F8C7F] font-bold hover:underline cursor-pointer"
+                    >
+                      100% (Default)
+                    </button>
+                    <span className="flex items-center gap-1 font-medium">
+                      <span>Zoom in (enlarge)</span>
+                      <ZoomIn className="h-3.5 w-3.5 text-[#4F4E55]" />
+                    </span>
                   </div>
                   <p className="text-xs text-[#4F4E55]">
-                    Safe-zone padding prevents circular social media avatars from cutting off the corners of your logo mark.
+                    Slider centered in the middle (100%). Drag left to zoom out, or drag right to zoom in.
                   </p>
                 </div>
 
@@ -743,7 +770,7 @@ export default function LogoResizerTool() {
               <p className="text-xs text-[#4F4E55]">
                 {selectedSizeIds.length} of {EXPORT_SIZES.length} sizes selected. Formatted as{" "}
                 <strong className="text-[#0B0B0D]">.{getExtension()}</strong> with{" "}
-                <strong className="text-[#0B0B0D]">{paddingPercent}% padding</strong>.
+                <strong className="text-[#0B0B0D]">{zoomPercent}% zoom</strong>.
               </p>
 
               <button

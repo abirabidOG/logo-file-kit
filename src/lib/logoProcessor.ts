@@ -146,22 +146,33 @@ export async function loadLogoFile(file: File): Promise<LoadedLogo> {
 }
 
 /**
- * Calculates drawing coordinates to center the logo with padding
+ * Calculates drawing coordinates to center the logo with adjustable zoom and safe padding.
+ * zoomPercent = 100 is default comfortable fit (80% box size / 10% safe padding).
+ * zoomPercent < 100 zooms out (shrinks logo, increases padding).
+ * zoomPercent > 100 zooms in (enlarges logo).
  */
 export function calculateFitRect(
   targetWidth: number,
   targetHeight: number,
   sourceWidth: number,
   sourceHeight: number,
-  paddingPercent: number
+  zoomPercent: number = 100
 ): { x: number; y: number; width: number; height: number } {
-  const padFraction = Math.max(0, Math.min(0.3, paddingPercent / 100));
-  const availWidth = targetWidth * (1 - 2 * padFraction);
-  const availHeight = targetHeight * (1 - 2 * padFraction);
+  // Base available box at 100% zoom provides 10% safe zone padding on each side (80% of canvas)
+  const baseAvailWidth = targetWidth * 0.8;
+  const baseAvailHeight = targetHeight * 0.8;
 
-  const scale = Math.min(availWidth / sourceWidth, availHeight / sourceHeight);
-  const drawWidth = sourceWidth * scale;
-  const drawHeight = sourceHeight * scale;
+  const baseScale = Math.min(
+    baseAvailWidth / sourceWidth,
+    baseAvailHeight / sourceHeight
+  );
+
+  // Zoom factor: 100% = 1.0x, 40% = 0.4x, 160% = 1.6x
+  const zoomFactor = Math.max(0.1, zoomPercent / 100);
+  const effectiveScale = baseScale * zoomFactor;
+
+  const drawWidth = sourceWidth * effectiveScale;
+  const drawHeight = sourceHeight * effectiveScale;
 
   const drawX = (targetWidth - drawWidth) / 2;
   const drawY = (targetHeight - drawHeight) / 2;
@@ -183,7 +194,7 @@ export async function renderLogoToSize(
   format: ExportFormat,
   background: BackgroundMode,
   customColor: string,
-  paddingPercent: number
+  zoomPercent: number = 100
 ): Promise<RenderResult> {
   const canvas = document.createElement("canvas");
   canvas.width = sizeConfig.width;
@@ -222,7 +233,7 @@ export async function renderLogoToSize(
     canvas.height,
     logo.width,
     logo.height,
-    paddingPercent
+    zoomPercent
   );
 
   ctx.drawImage(

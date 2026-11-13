@@ -35,7 +35,8 @@ export function trackLogoExported(params: {
   height: number;
   format: "png" | "jpg" | "webp";
   background: "transparent" | "white" | "black" | "custom";
-  paddingPercent: number;
+  zoomPercent?: number;
+  paddingPercent?: number;
   fileName: string;
 }) {
   trackEvent("logo_exported", {
@@ -43,7 +44,8 @@ export function trackLogoExported(params: {
     dimensions: `${params.width}x${params.height}`,
     export_format: params.format,
     background_type: params.background,
-    padding_percent: params.paddingPercent,
+    zoom_percent: params.zoomPercent ?? 100,
+    padding_percent: params.paddingPercent ?? (100 - (params.zoomPercent ?? 100)),
     file_name: params.fileName,
   });
 }
@@ -56,7 +58,8 @@ export function trackDownloadAllKit(params: {
   fileCount: number;
   format: "png" | "jpg" | "webp";
   background: "transparent" | "white" | "black" | "custom";
-  paddingPercent: number;
+  zoomPercent?: number;
+  paddingPercent?: number;
   selectedSizes: string[];
 }) {
   trackEvent("download_all_kit", {
@@ -65,7 +68,8 @@ export function trackDownloadAllKit(params: {
     file_count: params.fileCount,
     export_format: params.format,
     background_type: params.background,
-    padding_percent: params.paddingPercent,
+    zoom_percent: params.zoomPercent ?? 100,
+    padding_percent: params.paddingPercent ?? (100 - (params.zoomPercent ?? 100)),
     selected_sizes: params.selectedSizes.join(","),
   });
 }

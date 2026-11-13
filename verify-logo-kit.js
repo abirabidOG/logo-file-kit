@@ -121,6 +121,59 @@ async function runVerification() {
   }, { timeout: 8000 });
 
   console.log("Sample logo loaded into workspace!");
+
+  // TEST 3B: Zoom In & Zoom Out Slider (Centered Default 100%)
+  console.log('\n--- TEST 3B: Zoom Slider Verification (Center Default, Left Out, Right In) ---');
+  const zoomCheck = await page.evaluate(async () => {
+    const slider = document.querySelector('#zoom-slider');
+    if (!slider) return { error: "Zoom slider not found" };
+
+    const initialVal = slider.value;
+    const minVal = slider.min;
+    const maxVal = slider.max;
+
+    // Zoom In: slide right to 140%
+    slider.value = "140";
+    slider.dispatchEvent(new Event("change", { bubbles: true }));
+    slider.dispatchEvent(new Event("input", { bubbles: true }));
+
+    // Wait for render
+    await new Promise((r) => setTimeout(r, 200));
+    const zoomedInBadge = Array.from(document.querySelectorAll("span")).find(
+      (s) => s.textContent?.includes("140%")
+    )?.textContent?.trim();
+
+    // Zoom Out: slide left to 60%
+    const nativeSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+    nativeSetter.call(slider, "60");
+    slider.dispatchEvent(new Event("input", { bubbles: true }));
+    slider.dispatchEvent(new Event("change", { bubbles: true }));
+    await new Promise((r) => setTimeout(r, 200));
+
+    // Click Reset to 100% button
+    const resetBtn = Array.from(document.querySelectorAll("button")).find(
+      (b) => b.textContent?.trim() === "Reset" || b.textContent?.includes("100% (Default)")
+    );
+    if (resetBtn) {
+      resetBtn.click();
+    }
+    await new Promise((r) => setTimeout(r, 300));
+
+    return {
+      initialVal,
+      minVal,
+      maxVal,
+      isMidpoint: (Number(minVal) + Number(maxVal)) / 2 === Number(initialVal),
+      finalVal: slider.value,
+    };
+  });
+
+  console.log("Zoom Slider Properties:", zoomCheck);
+  console.log(`  Initial Value: ${zoomCheck.initialVal}% (expected 100)`);
+  console.log(`  Min: ${zoomCheck.minVal}%, Max: ${zoomCheck.maxVal}%`);
+  console.log(`  Is Initial Exactly in the Middle: ${zoomCheck.isMidpoint ? "PASSED (50% midpoint)" : "FAILED"}`);
+  console.log(`  Reset Button Functionality: ${zoomCheck.finalVal === "100" ? "PASSED (snaps to 100%)" : "FAILED"}`);
+
   await page.screenshot({
     path: path.join(screenshotsDir, "2-mobile-390px-sample.png"),
     fullPage: false,
