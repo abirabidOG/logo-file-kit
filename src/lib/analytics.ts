@@ -1,0 +1,71 @@
+// Google Analytics 4 Integration & Event Tracker for Logo File Kit
+
+export const GA_MEASUREMENT_ID =
+  process.env.NEXT_PUBLIC_GA_ID || "G-XXXXXXXXXX";
+
+declare global {
+  interface Window {
+    dataLayer: any[];
+    gtag?: (...args: any[]) => void;
+  }
+}
+
+// Generic helper to send GA4 events
+export function trackEvent(action: string, params: Record<string, any> = {}) {
+  if (typeof window === "undefined" || typeof window.gtag !== "function") {
+    if (process.env.NODE_ENV === "development") {
+      console.log(`[GA4 Event]: ${action}`, params);
+    }
+    return;
+  }
+
+  try {
+    window.gtag("event", action, params);
+  } catch (error) {
+    console.error("Failed to send GA4 event", error);
+  }
+}
+
+/**
+ * Fired when an individual logo size is successfully exported/downloaded
+ */
+export function trackLogoExported(params: {
+  sizeId: string;
+  width: number;
+  height: number;
+  format: "png" | "jpg" | "webp";
+  background: "transparent" | "white" | "black" | "custom";
+  paddingPercent: number;
+  fileName: string;
+}) {
+  trackEvent("logo_exported", {
+    size_id: params.sizeId,
+    dimensions: `${params.width}x${params.height}`,
+    export_format: params.format,
+    background_type: params.background,
+    padding_percent: params.paddingPercent,
+    file_name: params.fileName,
+  });
+}
+
+/**
+ * Fired on ZIP download ("Download All as ZIP").
+ * Designed to be marked as a Key Event (Conversion) in GA4.
+ */
+export function trackDownloadAllKit(params: {
+  fileCount: number;
+  format: "png" | "jpg" | "webp";
+  background: "transparent" | "white" | "black" | "custom";
+  paddingPercent: number;
+  selectedSizes: string[];
+}) {
+  trackEvent("download_all_kit", {
+    event_category: "Conversion",
+    event_label: "ZIP Download All",
+    file_count: params.fileCount,
+    export_format: params.format,
+    background_type: params.background,
+    padding_percent: params.paddingPercent,
+    selected_sizes: params.selectedSizes.join(","),
+  });
+}
