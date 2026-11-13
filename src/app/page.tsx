@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ArrowLeft } from "lucide-react";
 import Header from "@/components/Header";
 import LogoResizerTool from "@/components/LogoResizerTool";
 import SeoSection from "@/components/SeoSection";
@@ -105,9 +106,25 @@ export default function HomePage() {
       <Header />
 
       {/* Main Content Area */}
-      <main className="flex-1">
+      <main className="flex-1 pt-24 sm:pt-28 md:pt-32">
+        {/* Navigation Breadcrumb matching abidmahmud.cv tools */}
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 mb-4 sm:mb-6 flex items-center justify-between">
+          <a
+            href="https://tools.abidmahmud.cv/"
+            className="inline-flex items-center gap-2 rounded-full border border-[#0B0B0D]/10 bg-[#F4F2EC] px-4 py-2 font-mono text-xs font-semibold text-[#0B0B0D] transition-colors hover:border-[#0B0B0D]/30 hover:bg-white"
+          >
+            <ArrowLeft className="h-3.5 w-3.5" />
+            <span>All Free Tools</span>
+          </a>
+
+          <span className="inline-flex items-center gap-2 font-mono text-xs font-medium text-[#4F4E55]">
+            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+            v1.0 Client-Side Ready
+          </span>
+        </div>
+
         {/* Hero Section */}
-        <div className="pt-10 sm:pt-14 pb-6 sm:pb-8 text-center max-w-4xl mx-auto px-4 sm:px-6 space-y-4">
+        <div className="pt-2 sm:pt-4 pb-6 sm:pb-8 text-center max-w-4xl mx-auto px-4 sm:px-6 space-y-4">
           <div className="inline-flex items-center gap-2 rounded-full bg-[#F4F2EC] px-3.5 py-1 text-xs font-semibold text-[#4F4E55] border border-[#E5E1D6]">
             <span className="h-2 w-2 rounded-full bg-[#1F8C7F]" />
             <span>100% In-Browser • Zero Upload • Privacy First</span>
