@@ -91,6 +91,15 @@ export const EXPORT_SIZES: ExportSizeConfig[] = [
 
   // Print-ready
   {
+    id: "print-2000",
+    category: "Print-ready",
+    width: 2000,
+    height: 2000,
+    fileBaseName: "logo-print-master-2000",
+    description: "2000px print master high-resolution raster",
+    recommendedUse: "Print master file for large-format print, posters, signage, apparel & merchandise",
+  },
+  {
     id: "print-1024",
     category: "Print-ready",
     width: 1024,

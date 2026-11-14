@@ -81,12 +81,12 @@ export default function SeoSection() {
             <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-[#1F8C7F] shadow-xs">
               <Printer className="h-5 w-5" />
             </div>
-            <h3 className="text-base font-bold text-[#0B0B0D]">Print & Pitch Decks</h3>
+            <h3 className="text-base font-bold text-[#0B0B0D]">Print Master & Pitch Decks</h3>
             <p className="text-xs font-mono font-semibold text-[#1F8C7F]">
-              1024 × 1024 px
+              2000 × 2000 • 1024 × 1024 px
             </p>
             <p className="text-xs text-[#4F4E55] leading-relaxed">
-              Ultra high-density master export ideal for investor pitch decks, invoices, event programs, packaging mockups, and merchandise.
+              Ultra high-density 2000px print master and 1024px exports ideal for large-format print, posters, signage, investor pitch decks, invoices, and merchandise.
             </p>
           </div>
         </div>

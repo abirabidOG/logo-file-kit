@@ -676,7 +676,7 @@ export default function LogoResizerTool() {
                 >
                   {selectedSizeIds.length === EXPORT_SIZES.length
                     ? "Deselect All"
-                    : "Select All (9 sizes)"}
+                    : `Select All (${EXPORT_SIZES.length} sizes)`}
                 </button>
 
                 {/* Big Download All as ZIP Button */}
