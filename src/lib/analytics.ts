@@ -1,7 +1,7 @@
 // Google Analytics 4 Integration & Event Tracker for Logo File Kit
 
 export const GA_MEASUREMENT_ID =
-  process.env.NEXT_PUBLIC_GA_ID || "G-XXXXXXXXXX";
+  process.env.NEXT_PUBLIC_GA_ID || "G-ZF1FSM8N07";
 
 declare global {
   interface Window {
