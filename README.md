@@ -1,64 +1,38 @@
-# Logo File Kit — Free Logo Resizer and Transparent PNG Exporter
+# Logo File Kit
 
-> **"Get the right logo file for your website, social media and print in seconds. Free, no upload, your logo never leaves your browser."**
+**Get the right logo file for your website, social media, and print in seconds. Free, no upload, your logo never leaves your browser.**
 
-Logo File Kit is a high-performance, privacy-first single-page web application built with **Next.js (App Router)**, **TypeScript**, and **Tailwind CSS**. It enables founders, designers, and developers to convert, resize, pad, and export production-ready logo packages across all standard digital and print dimensions entirely inside the client browser using the **HTML5 Canvas API**.
+Logo File Kit turns one logo file into a complete set of production ready sizes: website logos, favicons, social avatars, and print masters, all as transparent PNGs. Use it free in your browser, or run it locally from this repo.
 
----
+- Live tool: https://tools.abidmahmud.cv/logo-kit
+- By Abid Mahmud, Brand Identity Designer: https://www.abidmahmud.cv
 
-## 💎 Features & Capabilities
+## What it does
 
-- **100% Client-Side Processing**: No remote server uploads, no databases, no tracking, and no file retention. Your proprietary brand marks never leave your device.
-- **Multi-Format Input**: Accepts **SVG**, **PNG**, and **JPG** logo files up to **10 MB**.
-- **Vector Designer Guidance**: Helpful export tips for Illustrator AI and EPS files.
-- **1-Click "Try a sample logo"**: Instant vector sample logo loading for first-time visitors to test all controls in one click.
-- **Interactive Live Preview**: Real-time rendering on an alpha transparency checkerboard grid (`.bg-transparency-grid`).
-- **Flexible Background Options**:
-  - **Transparent** (Default for PNG and WebP)
-  - **White** (`#FFFFFF`)
-  - **Black** (`#000000`)
-  - **Custom Color Picker** with hex display
-- **Safe-Zone Padding Slider**: Adjustable from **0% to 30%** (default: **10%**) to ensure logos never touch edges or get clipped by circular social media avatars.
-- **Production Export Sizes**:
-  - **Website logo**: `512 × 512` (`logo-512.png`), `256 × 256` (`logo-256.png`)
-  - **Browser Favicons**: `64 × 64` (`logo-favicon-64.png`), `48 × 48` (`logo-favicon-48.png`), `32 × 32` (`logo-favicon-32.png`), `16 × 16` (`logo-favicon-16.png`)
-  - **Social profile**: `400 × 400` (`logo-social-400.png` for Instagram, X, YouTube, TikTok)
-  - **LinkedIn / Facebook**: `300 × 300` (`logo-square-300.png` for Company Pages)
-  - **Print-ready**: `1024 × 1024` (`logo-print-1024.png` for pitch decks, merchandise, and invoices)
-- **Format Options**:
-  - **Transparent PNG** (Default)
-  - **JPG** (Solid background)
-  - **WebP** (Modern lightweight web format)
-- **Export Options**:
-  - **Download All as ZIP**: Instant `.zip` archive creation using `jszip`.
-  - **Download per size**: Instant single-file downloads.
-- **Design System**: Matches WEBPTools design language:
-  - White background (`#FFFFFF`), Ink text (`#0B0B0D`), Muted text (`#4F4E55`), Accent Teal (`#1F8C7F`), and Soft background (`#F4F2EC`).
-  - Mobile-first responsive design down to **390px** (iPhone).
-- **Comprehensive SEO & Schema**:
-  - Native `FAQPage` JSON-LD Schema (5 questions).
-  - Native `WebApplication` JSON-LD Schema.
-  - Open Graph tags & Twitter Cards.
-  - Educational sections on logo sizing and blur elimination.
-- **Google Analytics 4**:
-  - Placeholder `G-XXXXXXXXXX` (configurable via `NEXT_PUBLIC_GA_ID`).
-  - Fires `logo_exported` on single downloads.
-  - Fires `download_all_kit` on ZIP downloads (optimized for GA4 Key Event marking).
+- **Converts SVG, PNG, and JPG logos** up to 10 MB, entirely in your browser. No server upload, no account, no watermark.
+- **Exports transparent PNGs** in every size a brand needs, plus JPG and WebP where a solid background fits better.
+- **Download All as ZIP** for the full set in one click, or download single sizes.
+- **Safe zone padding** from 0 to 30 percent (10 percent by default), so a logo never touches an edge or gets clipped by a circular avatar.
+- **Background choices**: transparent, white, black, or any custom colour.
+- **One click sample logo** to try every control before uploading your own file.
 
----
+## Export sizes
 
-## 🛠️ Tech Stack
+| Use | Sizes |
+| --- | --- |
+| Website logo | 512 x 512, 256 x 256 |
+| Favicon | 64 x 64, 48 x 48, 32 x 32, 16 x 16 |
+| Social profile (Instagram, X, YouTube, TikTok) | 400 x 400 |
+| LinkedIn and Facebook | 300 x 300 |
+| Print | 2000 x 2000 print master, 1024 x 1024 |
 
-- **Framework**: Next.js 16 (App Router, Turbopack)
-- **Language**: TypeScript 5
-- **Styling**: Tailwind CSS v4
-- **Icons**: Lucide React
-- **Packaging**: JSZip
-- **Deployment**: Vercel-ready (zero backend functions or environment dependencies required)
+The print master is 2000 x 2000, ready for large format print, posters, signage, and merchandise. The 1024 size suits pitch decks, business cards, and invoices.
 
----
+## Use it in the browser
 
-## 🚀 Getting Started
+Open https://tools.abidmahmud.cv/logo-kit, drop in your logo, pick a background and padding, and download the sizes you need. Your file is processed with the HTML5 Canvas API on your own device and is never sent anywhere.
+
+## Run it locally
 
 ```bash
 # Install dependencies
@@ -74,25 +48,43 @@ npm run build
 npm run start
 ```
 
----
+## Check it works
 
-## 🧪 Verification & Automated Testing
-
-Run the included automated verification suite using headless Chrome / Edge:
+The repo includes an automated verification suite that runs in headless Chrome or Edge:
 
 ```bash
 # Generate test SVG, transparent PNG, and JPG assets
 node create-test-assets.js
 
-# Execute comprehensive verification (runs 7 end-to-end tests)
+# Run the end to end checks
 node verify-logo-kit.js
 ```
 
----
+## Claude Code plugin
 
-## 👤 Author & Attribution
+Logo File Kit also ships as a public Claude Code plugin, in `plugins/logo-file-kit/`. It exports logos to transparent PNG sizes from the terminal with a bundled sharp script. Install it with:
 
-**Abid Mahmud** — Brand Identity Designer & Logo Specialist  
-- Website: [https://www.abidmahmud.cv](https://www.abidmahmud.cv)  
-- Free Tools: [https://tools.abidmahmud.cv](https://tools.abidmahmud.cv)  
-- WEBPTools: [https://tools.abidmahmud.cv/webptools](https://tools.abidmahmud.cv/webptools)
+```text
+/plugin marketplace add abirabidOG/logo-file-kit
+/plugin install logo-file-kit@logo-file-kit
+```
+
+See `plugins/logo-file-kit/README.md` for usage.
+
+## Tech
+
+- Next.js 16 (App Router, Turbopack) and TypeScript 5
+- Tailwind CSS v4 and Lucide React
+- JSZip for Download All as ZIP
+- Vercel ready, no backend or environment variables required
+
+## Author
+
+**Abid Mahmud**, Brand Identity Designer
+
+- Website: https://www.abidmahmud.cv
+- Free tools: https://tools.abidmahmud.cv
+
+## Licence
+
+MIT. See `LICENSE`.

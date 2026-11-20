@@ -1,0 +1,1 @@
+{"name":"logo-file-kit","owner":{"email":"abir.abid.43@gmail.com","name":"Abid Mahmud"},"plugins":[{"description":"Export a logo to transparent PNG sizes (favicon, social, print) from Claude Code. Free, local, no sign-up, nothing uploaded.","name":"logo-file-kit","source":"./plugins/logo-file-kit","version":"0.1.0"}]}
