@@ -1,6 +1,6 @@
 export interface ExportSizeConfig {
   id: string;
-  category: "Website logo" | "Favicon" | "Social profile" | "LinkedIn / Facebook" | "Print-ready";
+  category: "Website logo" | "Favicon" | "App & Mobile" | "Social profile" | "Open Graph / Social" | "LinkedIn / Facebook" | "Print-ready";
   width: number;
   height: number;
   fileBaseName: string;
@@ -29,7 +29,7 @@ export const EXPORT_SIZES: ExportSizeConfig[] = [
     recommendedUse: "Standard resolution web headers and sidebars",
   },
 
-  // Favicon
+  // Favicon & App Icons
   {
     id: "favicon-64",
     category: "Favicon",
@@ -65,6 +65,46 @@ export const EXPORT_SIZES: ExportSizeConfig[] = [
     fileBaseName: "logo-favicon-16",
     description: "Classic micro favicon",
     recommendedUse: "Address bar micro-icon and bookmark bar listings",
+  },
+
+  // App & Mobile Icons (Phase 2)
+  {
+    id: "apple-touch-180",
+    category: "App & Mobile",
+    width: 180,
+    height: 180,
+    fileBaseName: "apple-touch-icon",
+    description: "Apple iOS Home Screen Icon",
+    recommendedUse: "iPhone, iPad bookmark and home screen touch icon",
+  },
+  {
+    id: "android-chrome-192",
+    category: "App & Mobile",
+    width: 192,
+    height: 192,
+    fileBaseName: "android-chrome-192x192",
+    description: "Android Chrome PWA launcher icon",
+    recommendedUse: "Android home screen bookmark & web manifest",
+  },
+  {
+    id: "android-chrome-512",
+    category: "App & Mobile",
+    width: 512,
+    height: 512,
+    fileBaseName: "android-chrome-512x512",
+    description: "Android splash screen & high-res manifest",
+    recommendedUse: "PWA splash screen & Google Play web manifest",
+  },
+
+  // Open Graph / Social Media Card (Phase 2)
+  {
+    id: "og-image-1200",
+    category: "Open Graph / Social",
+    width: 1200,
+    height: 630,
+    fileBaseName: "og-image",
+    description: "Social share card (OG Image)",
+    recommendedUse: "Twitter Card, Facebook share, LinkedIn feed preview",
   },
 
   // Social profile

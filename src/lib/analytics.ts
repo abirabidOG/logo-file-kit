@@ -65,11 +65,33 @@ export function trackDownloadAllKit(params: {
   trackEvent("download_all_kit", {
     event_category: "Conversion",
     event_label: "ZIP Download All",
-    file_count: params.fileCount,
+    fileCount: params.fileCount,
     export_format: params.format,
     background_type: params.background,
     zoom_percent: params.zoomPercent ?? 100,
     padding_percent: params.paddingPercent ?? (100 - (params.zoomPercent ?? 100)),
     selected_sizes: params.selectedSizes.join(","),
+  });
+}
+
+/**
+ * Phase 2 Events
+ */
+export function trackIcoDownloaded(sizes: number[] = [16, 32, 48]) {
+  trackEvent("ico_downloaded", {
+    sizes: sizes.join(","),
+    format: "ico",
+  });
+}
+
+export function trackPreviewViewed(viewType: string = "browser_tab") {
+  trackEvent("preview_viewed", {
+    view_type: viewType,
+  });
+}
+
+export function trackSvgDownloaded(fileName: string) {
+  trackEvent("svg_downloaded", {
+    file_name: fileName,
   });
 }
