@@ -181,7 +181,7 @@ export default function LogoResizerTool() {
       }
 
       setFeedbackMessage({
-        text: `Loaded ${loadedList.length} logo${loadedList.length > 1 ? "s" : ""} successfully. Ready for Phase 2 export!`,
+        text: `Loaded ${loadedList.length} logo${loadedList.length > 1 ? "s" : ""} successfully. Ready for export!`,
         type: "success",
       });
     } catch (err: any) {
@@ -576,7 +576,7 @@ export default function LogoResizerTool() {
             </div>
 
             <div className="rounded-xl border border-[#C9C7C1] bg-[#F4F2EC] px-4 py-2.5 max-w-lg text-xs text-[#4F4E55] leading-relaxed">
-              <span className="font-semibold text-[#0B0B0D]">Phase 2 Upgrade:</span>{" "}
+              <span className="font-semibold text-[#0B0B0D]">Includes:</span>{" "}
               Exports multi-size <strong className="text-[#0B0B0D]">favicon.ico</strong>, Apple Touch, Android PWA, OG share cards, brand sheets, and batch ZIPs client-side!
             </div>
 
@@ -702,7 +702,7 @@ export default function LogoResizerTool() {
             <div className="flex items-center gap-2">
               <span className="text-xs font-bold uppercase tracking-wider text-[#4F4E55] flex items-center gap-1.5">
                 <Sparkles className="h-4 w-4 text-[#5846F6]" />
-                <span>Phase 2 Quick Exports:</span>
+                <span>Quick Exports:</span>
               </span>
             </div>
 
